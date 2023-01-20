@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title><%= listing.name %></title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/styles.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+        
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>                       
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">Home</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="grid-container">
+            <div class="sidenav">
+                <p><a href="/display-user/all">Users</a></p>
+                <p><a href="/display-world-map">World Map</a></p>
+            </div>
+            <div class="description"> 
+                <form action="/">
+                    <input type="submit" value="Back">
+                </form>
+                <h1><%= listing.name %> hosted by <a href="/display-user/?userID=<%=listing.user_id%>"><%= listing.first_name %> <%= listing.last_name %></a></h1>
+                <p><%= listing.cityName %>, <%= listing.stateName %></p>
+                <p><%= listing.number_rooms %> Room(s), <%= listing.max_guest %> Guest(s), <%= listing.number_bathrooms %> baths @ $<%= listing.price_by_night %> / night</p>
+                <p><%- listing.description %></p>
+                <hr>
+                <h3>Amenities Included:</h3>
+                <% for (let i = 0; i < amenities.length; i++) { %>
+                    
+                    <%if (i+1 != amenities.length) {%>
+                        <%=amenities[i].name%>,&nbsp;
+                    <% } else {%>
+                        <%=amenities[i].name%>
+                    <% } %>
+                <% } %>
+                <p><%= listing.amenityName %></p>
+                <hr>
+                <h2>Map</h2>
+                <div class="flex-container">
+                    <div class="flex-child" id="map"></div>
+                </div>
+                <hr>
+                <h2>Reviews</h2>
+                <% for (let i = 0; i < reviews.length; i++) { %>
+                    <div class="review text-left">
+                        <p><%= i + 1 %>. <%- reviews[i].text %></p>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+        <footer>
+            <p>TWithers Inc.&copy;</p>
+        </footer>
+        <script type="text/javascript">
+            // This script creates a map and adds a circle to it indicating the location of the listing
+            const map = L.map('map').setView([`<%=listing.latitude%>`, `<%=listing.longitude%>`], 16);
+        
+            const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(map);
+
+            let circle = L.circle([`<%=listing.latitude%>`, `<%=listing.longitude%>`], {
+                color: 'red',
+                fillColor: '#f03',
+                fillOpacity: 0.5,
+                radius: 100
+            }).addTo(map);
+        </script>
+    </body>
+</html>

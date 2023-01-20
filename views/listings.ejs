@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Found Listings</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/styles.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>                   
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">Home</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="grid-container">
+            <div class="sidenav">
+                <p><a href="/display-user/all">Users</a></p>
+                <p><a href="/display-world-map">World Map</a></p>
+            </div>
+            <div>
+                <% if (pHeading == "Results") { %>
+                    <form action="/">
+                        <input type="submit" value="Back">
+                    </form>
+                <% } else { %>
+                    <button onclick="history.back()">Back</button>
+                <% } %>
+                <div><h1><%= pHeading %></h1></div>
+                <% if (pHeading != "Results") { %>
+                    <p><%= listings[0].email%></p>
+                <% } %>
+                <div>
+                    <% for (let i = 0; i < listings.length; i++) { %>
+                        </br>
+                        <div class="border p-5 bg-light col-6">
+                            <a href="/find-many/display-one/?id=<%=listings[i].id%>"> <%= listings[i].name %></a>
+                            <p><%= listings[i].cityName %>, <%= listings[i].stateName %></p>
+                            <p><%= listings[i].max_guest %> Guests, <%= listings[i].number_bathrooms %> baths @ $<%= listings[i].price_by_night %> / night</p>
+                        </div>
+                        </br>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <footer class="container-fluid text-center">
+            <p>TWithers Inc.&copy;</p>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Users</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/styles.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>                        
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">Home</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+  
+        <div class="grid-container">
+            <div class="sidenav">
+                <p><a href="/display-user/all">Users</a></p>
+                <p><a href="/display-world-map">World Map</a></p>
+            </div>
+            <div>
+                <form action="/">
+                    <input type="submit" value="Back">
+                </form>
+                <% let curUser = ""; %>
+                <% let counter = 0; %>
+                <div class="flex-container">
+                    <% for (let i = 0; i < users.length; i++) { %>
+                        <% let holdUser = users[i].first_name + " " + users[i].last_name %>
+                        
+                        <% if (curUser !== holdUser) { %>
+                            <% if (counter == 0) { %>
+                                <div class="flex-child">
+                            <% } %>
+                            <a href="/display-user/?userID=<%=users[i].user_id%>"><h3 class="userBox"><%= users[i].first_name %> <%= users[i].last_name %></h3></a>
+                            
+                            <% if (counter == 9) { %>
+                                </div>
+                                <br>
+                            <% } %>
+                            <% counter++ %>
+                            <% if (counter == 10) { %>
+                                <% counter = 0; %>
+                            <% } %>
+                        <% } %>
+                        
+                        <% curUser = users[i].first_name + " " + users[i].last_name %>
+                    <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="container-fluid text-center">
+            <p>TWithers Inc.&copy;</p>
+        </footer>
+    </body>
+</html>

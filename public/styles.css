@@ -1,0 +1,68 @@
+html,body
+{
+    height: 100%;
+    font-size: large;
+}
+label
+{
+    font-weight: normal;
+}
+footer {
+    background-color: #555;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+input[type='number']{
+    width: 200px;
+}
+.navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+}
+.flex-container {
+    align-content: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.flex-child {
+    flex: 1;
+}
+.grid-container
+{
+    text-align: center;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: max-content auto;
+    min-height: calc(100vh - 52px - 65.71px);
+}
+.sidenav {
+    width: 10em;
+    padding-top: 20px;
+    background-color: #f1f1f1;
+    text-align: center;
+}
+.userBox {
+    border: black solid 1px;
+}
+.description {
+    padding: 2em;
+}
+.lText
+{
+    text-align: left;
+    padding-left: 10em;
+}
+#map
+{
+    width: 600px;
+    height: 600px;
+}
+@media screen and (max-width: 767px) {
+    .sidenav {
+        height: auto;
+        padding: 15px;
+    }
+    .row.content {height:auto;} 
+}

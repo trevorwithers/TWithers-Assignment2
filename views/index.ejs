@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title><%= title %></title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/styles.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>    
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">Home</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="grid-container">
+            <div class="sidenav">
+                <p><a href="/display-user/all">Users</a></p>
+                <p><a href="/display-world-map">World Map</a></p>
+            </div>
+            <div>
+                <h1><%= title %></h1>
+                <p>Trevor Withers</p>
+                <h2>Search For One listing</h2>
+                <form action="/airbnb/find-one">
+                    <div class="flex-container">
+                        <div class="flex-child">
+                            <h3>Accomodation Parameters</h3>
+                            <div class="flex-container">
+                                <div class="flex-child lText">
+                                    <label for="bedroomID">Minimum number of bedrooms</label></br></br>
+                                    <label for="maxGuestsID">Maximum number of guests</label></br></br>
+                                    <label for="maxPriceID">Maximum price per night</label>
+                                </div>
+                                <div class="flex-child">
+                                    <input type="number" id="bedroomID" name="bedrooms" value="1" min="0" max="10" required></br></br>
+                                    <input type="number" name="maxGuests" id="maxGuestsID" required/></br></br>
+                                    <input type="number" name="maxPrice" id="maxPriceID" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-child">
+                            <h3>Amenities</h3>
+                            <div class="lText">
+                                <input type="checkbox" name="amenities[]" id="wifi" value="49fcaedc-481a-4e05-934f-4867988c8ec5">
+                                <label for="wifi">Wireless Internet</label><br>
+                                <input type="checkbox" name="amenities[]" id="pool" value="f4e98f0a-053a-42e2-9633-0cca2a587410">
+                                <label for="pool">Pool</label><br>
+                                <input type="checkbox" name="amenities[]" id="breakfast" value="9c54e3ed-48b3-4438-bb2c-304e14a9bde4">
+                                <label for="breakfast">Breakfast</label><br>
+                                <input type="checkbox" name="amenities[]" id="livingRoom" value="28ff856a-2cfb-44df-91b8-1285914553c8">
+                                <label for="livingRoom">Private Living Room</label><br>
+                                <input type="checkbox" name="amenities[]" id="selfCheckIn" value="2c620702-d41c-4732-a1cf-6e40f7877dc3">
+                                <label for="selfCheckIn">Self Check-In</label><br>
+                            </div>
+                            <br><br>
+                        </div>
+                    </div>
+                    <input type="submit" value="Search">
+                </form>
+                <hr>
+                <div>
+                    <h2>Search For Many listings</h2>
+                </div>
+                <form action="/airbnb/find-many">
+                    <div class="flex-container">
+                        <div class="flex-child">
+                            <h3>Accomodation Parameters</h3>
+                            <label for="bedrooms">Minimum number of bedrooms</label>
+                            <input type="number" id="bedrooms" name="bedrooms" required min="0" max="10">
+                        </div>
+                        <div class="flex-child">
+                            <h3>Location</h3>
+                            <select name="state" id="stateID" required>
+                                <option value="">--Select A State--</option>
+                                <% for (let i = 0; i < states.length; i++) { %>
+                                    <option value="<%= states[i].id %>"><%= states[i].name %></option>
+                                <% } %>
+                            </select>
+                            <select name="city" id="cityID" required>
+                                <option value="">--Select A City--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <input type="submit" value="Search">
+                    </br></br>
+                </form>
+            </div>
+        </div>
+
+        <footer class="container-fluid text-center">
+            <p>TWithers Inc.&copy;</p>
+        </footer>
+        <script type="text/javascript">
+            // THis script is used to populate the city dropdown based on the state selected
+            let statesList = document.getElementById("stateID");
+            
+            statesList.addEventListener("change", event => {
+                let currentState = statesList[statesList.selectedIndex];
+                let currentStateId = currentState.value;
+                let citiesList = document.getElementById("cityID");
+                citiesList.innerHTML = `<option value="">--Select A City--</option>`;
+                let currentCity = ``;
+                `<% for (let i = 0; i < cities.length; i++) { %>`
+                    currentCity = `<%= cities[i].state_id %>`;
+                    if (currentCity == currentStateId) {
+                        citiesList.innerHTML += `<option value="<%= cities[i].id %>"><%= cities[i].name %></option>`;
+                    }
+                `<% } %>`
+            });
+        </script>
+    </body>
+</html>

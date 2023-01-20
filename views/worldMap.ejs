@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title><%= title %></title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/styles.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+        
+    </head>
+    <body>
+
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>                     
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">Home</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+   
+        <div class="grid-container">
+            <div class="sidenav">
+                <p><a href="/display-user/all">Users</a></p>
+                <p><a href="/display-world-map">World Map</a></p>
+            </div>
+            <div>
+                <form action="/">
+                    <input type="submit" value="Back">
+                </form>
+                <h1>World Map</h1>
+                <div class="flex-container">
+                    <div class="flex-child" id="map"></div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>TWithers Inc.&copy;</p>
+        </footer>
+        
+        <script type="text/javascript">
+            // This script is used to create the map and add markers to it.
+            const map = L.map('map').setView(["41.462243434783844", "-112.62623705413894"], 4);
+        
+            const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(map);
+            let marker;
+            `<% for (let i = 0; i < locations.length; i++) { %>`
+                marker = L.marker([`<%= locations[i].latitude %>`, `<%= locations[i].longitude%>`]).addTo(map);
+                marker.bindPopup(`
+                                    <a href=\"/find-many/display-one/?id=<%=locations[i].id%>\">
+                                        <b><%=locations[i].name%></b>
+                                    </a>
+                                    <br>
+                                    <a href=\"/display-user/?userID=<%=locations[i].user_id%>\">
+                                        <%=locations[i].first_name%> <%=locations[i].last_name%>
+                                    </a> 
+                                    <br> 
+                                    <a href="/airbnb/find-many/?bedrooms=0&state=<%=locations[i].stateID%>&city=<%=locations[i].cityID%>\">
+                                        <%=locations[i].cityName%>, <%=locations[i].stateName%>
+                                    </a>`);
+            `<% } %>`
+        </script>
+    </body>
+</html>
